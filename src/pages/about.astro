@@ -1,0 +1,87 @@
+---
+import MainLayout from "../layouts/MainLayout.astro"
+
+export const prerender = true
+
+const title = "About - GMYMF"
+const description = "Learn about GMYMF - Give me your money, fool. Exclusive limited edition clothing brand."
+---
+
+<MainLayout title={title} description={description}>
+  <!-- Hero -->
+  <section class="section border-b">
+    <div class="container">
+      <h1 class="heading-xl max-w-5xl">
+        About<br />GMYMF
+      </h1>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="section border-b">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Our Story</p>
+          <h2 class="heading-md">Give me your<br />money, fool.</h2>
+        </div>
+        
+        <div class="lg:pt-16 space-y-6">
+          <p class="text-body-lg text-muted">
+            GMYMF was born from a simple philosophy: fashion should be exclusive, 
+            limited, and make a statement. We don't mass-produce. We create 
+            limited edition pieces that are gone when they're gone.
+          </p>
+          <p class="text-body text-muted">
+            Each drop is carefully curated, designed with attention to every detail, 
+            and produced in limited quantities. When you wear GMYMF, you're not just 
+            wearing clothes—you're wearing something unique.
+          </p>
+          <p class="text-body text-muted">
+            Based in Germany, shipping worldwide. Quality over quantity. Always.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section border-b">
+    <div class="container">
+      <p class="text-muted text-sm uppercase tracking-wider mb-16">Our Values</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-800">
+        <div class="bg-black p-8 lg:p-12">
+          <p class="text-6xl font-light text-gray-800 mb-8">01</p>
+          <h3 class="text-xl uppercase tracking-wider mb-4">Exclusivity</h3>
+          <p class="text-muted">Limited quantities. Once sold out, never restocked.</p>
+        </div>
+        
+        <div class="bg-black p-8 lg:p-12">
+          <p class="text-6xl font-light text-gray-800 mb-8">02</p>
+          <h3 class="text-xl uppercase tracking-wider mb-4">Quality</h3>
+          <p class="text-muted">Premium materials. Built to last. No compromises.</p>
+        </div>
+        
+        <div class="bg-black p-8 lg:p-12">
+          <p class="text-6xl font-light text-gray-800 mb-8">03</p>
+          <h3 class="text-xl uppercase tracking-wider mb-4">Community</h3>
+          <p class="text-muted">A community of individuals who value unique style.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="section">
+    <div class="container text-center">
+      <h2 class="heading-lg mb-8">Get in Touch</h2>
+      <p class="text-muted text-body-lg mb-8 max-w-md mx-auto">
+        Questions about our products or want to collaborate? We'd love to hear from you.
+      </p>
+      <a href="mailto:hello@gmymf.com" class="btn">
+        Contact Us
+      </a>
+    </div>
+  </section>
+</MainLayout>

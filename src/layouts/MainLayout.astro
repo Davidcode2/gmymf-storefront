@@ -1,0 +1,193 @@
+---
+import "../styles/global.css"
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const { 
+  title, 
+  description = "GMYMF - Give me your money, fool. Exclusive limited edition clothing."
+} = Astro.props
+
+const currentPath = Astro.url.pathname
+---
+
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#000000" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GMYMF" />
+    
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" 
+      rel="stylesheet" 
+    />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <title>{title}</title>
+  </head>
+  
+  <body>
+    <!-- Skip to main content -->
+    <a 
+      href="#main-content" 
+      class="sr-only focus:not-sr-only focus:fixed focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-black focus:text-sm focus:uppercase focus:tracking-wider"
+    >
+      Skip to content
+    </a>
+    
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-40 border-b-subtle bg-black">
+      <nav class="container flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="/" class="heading-md text-xl md:text-2xl tracking-tight hover:opacity-100">
+          GMYMF
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-8">
+          <a 
+            href="/products" 
+            class:list={[
+              "text-sm uppercase tracking-wider",
+              currentPath.startsWith("/products") ? "text-white" : "text-muted"
+            ]}
+          >
+            Products
+          </a>
+          <a 
+            href="/about" 
+            class:list={[
+              "text-sm uppercase tracking-wider",
+              currentPath === "/about" ? "text-white" : "text-muted"
+            ]}
+          >
+            About
+          </a>
+        </div>
+        
+        <!-- Cart Icon -->
+        <div class="flex items-center gap-4">
+          <a href="/cart" class="text-sm uppercase tracking-wider text-muted hover:text-white transition-colors">
+            Cart (0)
+          </a>
+          
+          <!-- Mobile Menu Button -->
+          <button 
+            id="mobile-menu-btn"
+            class="md:hidden p-2 text-white"
+            aria-label="Open menu"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+      
+      <!-- Mobile Menu -->
+      <div 
+        id="mobile-menu" 
+        class="hidden md:hidden border-t border-gray-900 bg-black"
+      >
+        <div class="container py-4 space-y-4">
+          <a 
+            href="/products" 
+            class="block text-sm uppercase tracking-wider py-2"
+          >
+            Products
+          </a>
+          <a 
+            href="/about" 
+            class="block text-sm uppercase tracking-wider py-2"
+          >
+            About
+          </a>
+          <a 
+            href="/cart" 
+            class="block text-sm uppercase tracking-wider py-2"
+          >
+            Cart (0)
+          </a>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main content -->
+    <main id="main-content" class="pt-16">
+      <slot />
+    </main>
+    
+    <!-- Footer -->
+    <footer class="border-t-subtle">
+      <div class="container section-sm">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
+          <!-- Brand -->
+          <div class="space-y-4">
+            <p class="heading-md text-xl">GMYMF</p>
+            <p class="text-muted text-sm max-w-xs">
+              Give me your money, fool. Exclusive limited edition clothing.
+            </p>
+          </div>
+          
+          <!-- Links -->
+          <div class="space-y-4">
+            <p class="text-sm uppercase tracking-wider text-muted">Links</p>
+            <div class="space-y-2">
+              <a href="/products" class="block text-sm hover:text-muted">Products</a>
+              <a href="/about" class="block text-sm hover:text-muted">About</a>
+              <a href="/contact" class="block text-sm hover:text-muted">Contact</a>
+            </div>
+          </div>
+          
+          <!-- Social -->
+          <div class="space-y-4">
+            <p class="text-sm uppercase tracking-wider text-muted">Follow</p>
+            <div class="space-y-2">
+              <a href="#" class="block text-sm hover:text-muted">Instagram</a>
+              <a href="#" class="block text-sm hover:text-muted">Twitter</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bottom -->
+        <div class="border-t-subtle mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p class="text-muted text-xs uppercase tracking-wider">
+            © 2026 GMYMF. All rights reserved.
+          </p>
+          <div class="flex gap-6">
+            <a href="/privacy" class="text-muted text-xs uppercase tracking-wider hover:text-white">Privacy</a>
+            <a href="/terms" class="text-muted text-xs uppercase tracking-wider hover:text-white">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+import MainLayout from "../layouts/MainLayout.astro"
+
+export const prerender = true
+---
+
+<MainLayout title="404 - GMYMF" description="The page you're looking for doesn't exist.">
+  <section class="min-h-[80vh] flex items-center justify-center container">
+    <div class="text-center">
+      <p class="text-8xl md:text-[12rem] font-light text-gray-900 leading-none mb-8">
+        404
+      </p>
+      <h1 class="heading-lg mb-8">Page Not Found</h1>
+      <p class="text-muted text-body-lg mb-12 max-w-md mx-auto">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="btn btn-solid">
+          Go Home
+        </a>
+        <a href="/products" class="btn">
+          Browse Products
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

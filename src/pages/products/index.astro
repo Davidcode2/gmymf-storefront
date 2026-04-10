@@ -1,0 +1,150 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro"
+import { sdk } from "../../lib/medusa"
+
+export const prerender = false
+
+const title = "Products - GMYMF"
+const description = "Browse our exclusive limited edition clothing. Limited pieces, maximum style."
+
+let products: any[] = []
+let error: string | null = null
+
+try {
+  const { products: fetchedProducts } = await sdk.store.product.list({
+    limit: 50,
+    fields: "*variants.calculated_price",
+  })
+  products = fetchedProducts
+} catch (err) {
+  console.error("Failed to fetch products:", err)
+  error = "Failed to load products"
+}
+
+const categories = [...new Set(products.map(p => p.collection?.title).filter(Boolean))]
+---
+
+<MainLayout title={title} description={description}>
+  <!-- Header -->
+  <section class="section-sm border-b">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">All Products</p>
+          <h1 class="heading-lg">Products</h1>
+        </div>
+        
+        <div class="lg:text-right">
+          <p class="text-muted text-body-lg max-w-md lg:ml-auto">
+            Exclusive limited edition pieces. Once they're gone, they're gone.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="border-b py-4">
+    <div class="container">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-6">
+          <span class="text-sm uppercase tracking-wider">Filter:</span>
+          {categories.length > 0 ? (
+            <div class="flex flex-wrap gap-4">
+              {categories.slice(0, 5).map((category) => (
+                <button class="text-sm text-muted hover:text-white transition-colors">
+                  {category}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <span class="text-sm text-muted">All</span>
+          )}
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <span class="text-sm uppercase tracking-wider">Sort:</span>
+          <select class="bg-transparent text-white border-none text-sm focus:outline-none cursor-pointer">
+            <option value="newest" class="bg-black">Newest</option>
+            <option value="price-low" class="bg-black">Price: Low</option>
+            <option value="price-high" class="bg-black">Price: High</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section>
+    <div class="container px-0">
+      {error ? (
+        <div class="section text-center">
+          <p class="text-muted text-lg mb-8">{error}</p>
+          <button 
+            onclick="window.location.reload()" 
+            class="btn"
+          >
+            Try Again
+          </button>
+        </div>
+      ) : products.length === 0 ? (
+        <div class="section text-center">
+          <p class="text-muted text-lg mb-4">No products available yet.</p>
+          <p class="text-muted">Check back soon for new drops.</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800">
+          {products.map((product) => {
+            const cheapestVariant = product.variants?.reduce((cheapest: any, variant: any) => {
+              const price = variant.calculated_price?.calculated_amount || variant.price || 0
+              const cheapestPrice = cheapest?.calculated_price?.calculated_amount || cheapest?.price || Infinity
+              return price < cheapestPrice ? variant : cheapest
+            }, null)
+            
+            const price = cheapestVariant?.calculated_price?.calculated_amount || cheapestVariant?.price || 0
+            const image = product.images?.[0]?.url || product.thumbnail
+            
+            return (
+              <a 
+                href={`/products/${product.handle}`}
+                class="card p-6 bg-black group block"
+              >
+                <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4 overflow-hidden">
+                  {image ? (
+                    <img 
+                      src={image} 
+                      alt={product.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="text-4xl font-light text-gray-800">GMYMF</span>
+                  )}
+                </div>
+                
+                <div class="space-y-2">
+                  {product.collection && (
+                    <p class="text-xs text-muted uppercase tracking-wider">{product.collection.title}</p>
+                  )}
+                  <h3 class="text-lg group-hover:text-muted transition-colors">
+                    {product.title}
+                  </h3>
+                  <p class="text-muted">
+                    €{price.toFixed(2)}
+                  </p>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+      )}
+    </div>
+    
+    <!-- Product Count -->
+    <div class="container py-8 border-b">
+      <p class="text-muted text-sm uppercase tracking-wider text-center">
+        Showing {products.length} product{products.length !== 1 ? 's' : ''}
+      </p>
+    </div>
+  </section>
+</MainLayout>

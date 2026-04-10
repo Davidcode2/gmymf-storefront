@@ -1,0 +1,203 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro"
+import { sdk } from "../../lib/medusa"
+
+export const prerender = false
+
+const { handle } = Astro.params
+
+if (!handle) {
+  return Astro.redirect("/products")
+}
+
+let product: any = null
+let error: string | null = null
+
+try {
+  const { products: fetchedProducts } = await sdk.store.product.list({
+    handle: handle,
+    limit: 1,
+    fields: "*variants,*variants.options,*options,*images",
+  })
+  
+  product = fetchedProducts[0]
+  
+  if (!product) {
+    return Astro.redirect("/404")
+  }
+} catch (err) {
+  console.error("Failed to fetch product:", err)
+  error = "Failed to load product"
+}
+
+const title = product ? `${product.title} - GMYMF` : "Product - GMYMF"
+const description = product?.description || "Exclusive limited edition clothing from GMYMF"
+---
+
+<MainLayout title={title} description={description}>
+  {error ? (
+    <section class="section flex items-center justify-center">
+      <div class="text-center">
+        <p class="text-muted text-lg mb-8">{error}</p>
+        <a href="/products" class="btn">
+          Back to Products
+        </a>
+      </div>
+    </section>
+  ) : product ? (
+    <div>
+      {/* Breadcrumbs */}
+      <div class="container py-8 border-b">
+        <nav class="flex items-center gap-4 text-sm">
+          <a href="/" class="text-muted hover:text-white">Home</a>
+          <span class="text-muted">/</span>
+          <a href="/products" class="text-muted hover:text-white">Products</a>
+          <span class="text-muted">/</span>
+          <span class="text-white uppercase tracking-wider">{product.title}</span>
+        </nav>
+      </div>
+
+      {/* Product Detail */}
+      <section class="section-sm">
+        <div class="container">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-gray-800">
+            {/* Image Gallery */}
+            <div class="bg-black p-8 lg:p-16">
+              <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center">
+                {product.images?.[0]?.url ? (
+                  <img 
+                    src={product.images[0].url}
+                    alt={product.title}
+                    class="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span class="text-6xl font-light text-gray-800">GMYMF</span>
+                )}
+              </div>
+              
+              {/* Thumbnails */}
+              {product.images && product.images.length > 1 && (
+                <div class="grid grid-cols-4 gap-px mt-px bg-gray-800">
+                  {product.images.slice(0, 4).map((image: any, index: number) => (
+                    <div class="aspect-square bg-gray-900 cursor-pointer hover:bg-gray-800 transition-colors">
+                      <img 
+                        src={image.url}
+                        alt={`${product.title} - ${index + 1}`}
+                        class="w-full h-full object-cover opacity-50 hover:opacity-100 transition-opacity"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Product Info */}
+            <div class="bg-black p-8 lg:p-16 flex flex-col justify-center">
+              <div class="max-w-md">
+                {/* Collection */}
+                {product.collection && (
+                  <p class="text-xs text-muted uppercase tracking-wider mb-4">
+                    {product.collection.title}
+                  </p>
+                )}
+
+                {/* Title */}
+                <h1 class="heading-md mb-6">{product.title}</h1>
+
+                {/* Price */}
+                <div class="mb-8">
+                  {product.variants?.[0]?.calculated_price ? (
+                    <span class="text-3xl font-light">
+                      €{product.variants[0].calculated_price.calculated_amount.toFixed(2)}
+                    </span>
+                  ) : product.variants?.[0]?.price ? (
+                    <span class="text-3xl font-light">
+                      €{product.variants[0].price.toFixed(2)}
+                    </span>
+                  ) : (
+                    <span class="text-3xl font-light">Price on request</span>
+                  )}
+                </div>
+
+                {/* Description */}
+                {product.description && (
+                  <p class="text-muted text-body-lg mb-8 leading-relaxed">
+                    {product.description}
+                  </p>
+                )}
+
+                {/* Options */}
+                {product.options && product.options.length > 0 && (
+                  <div class="space-y-6 mb-8">
+                    {product.options.map((option: any) => (
+                      <div>
+                        <label class="block text-xs uppercase tracking-wider text-muted mb-3">
+                          {option.title}
+                        </label>
+                        <div class="flex flex-wrap gap-2">
+                          {option.values?.map((value: any) => (
+                            <button 
+                              class="px-4 py-2 text-sm border border-gray-800 hover:border-white transition-colors"
+                              type="button"
+                            >
+                              {value.value}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Quantity & Add to Cart */}
+                <div class="space-y-4">
+                  <div class="flex items-stretch gap-px bg-gray-800">
+                    <button 
+                      class="px-6 py-4 bg-black hover:bg-gray-900 transition-colors"
+                      type="button"
+                    >
+                      −
+                    </button>
+                    <span class="px-6 py-4 bg-black min-w-[4rem] text-center">1</span>
+                    <button 
+                      class="px-6 py-4 bg-black hover:bg-gray-900 transition-colors"
+                      type="button"
+                    >
+                      +
+                    </button>
+                  </div>
+                  
+                  <button 
+                    class="btn btn-solid w-full"
+                    type="button"
+                    disabled={!product.variants?.some((v: any) => v.inventory_quantity > 0)}
+                  >
+                    {product.variants?.some((v: any) => v.inventory_quantity > 0) 
+                      ? "Add to Cart" 
+                      : "Out of Stock"
+                    }
+                  </button>
+                  
+                  {/* Stock Status */}
+                  <p class="text-xs uppercase tracking-wider text-muted text-center">
+                    {product.variants?.some((v: any) => v.inventory_quantity > 0) 
+                      ? "In Stock — Ships within 2-3 days" 
+                      : "Currently out of stock"
+                    }
+                  </p>
+                </div>
+
+                {/* Additional Info */}
+                <div class="mt-12 pt-8 border-t-subtle space-y-2 text-xs uppercase tracking-wider text-muted">
+                  <p>Free returns within 30 days</p>
+                  <p>Secure checkout</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  ) : null}
+</MainLayout>

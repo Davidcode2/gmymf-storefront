@@ -1,0 +1,85 @@
+---
+import MainLayout from "../layouts/MainLayout.astro"
+
+export const prerender = true
+
+const title = "GMYMF"
+const description = "Give me your money, fool. Exclusive limited edition clothing."
+---
+
+<MainLayout title={title} description={description}>
+  <!-- Hero Section -->
+  <section class="min-h-[calc(100vh-4rem)] flex flex-col justify-center container">
+    <div class="max-w-5xl">
+      <h1 class="heading-xl">
+        Give me<br />
+        your money,<br />
+        fool.
+      </h1>
+      
+      <div class="mt-12 flex flex-col sm:flex-row gap-4">
+        <a href="/products" class="btn btn-solid">
+          Shop Now
+        </a>
+        <a href="/about" class="btn">
+          Learn More
+        </a>
+      </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
+      <div class="w-px h-16 bg-white/30"></div>
+    </div>
+  </section>
+  
+  <!-- Featured Section -->
+  <section class="section border-t">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Featured</p>
+          <h2 class="heading-lg">Latest<br />Drops</h2>
+        </div>
+        
+        <div class="lg:pt-16">
+          <p class="text-body-lg text-muted mb-8 max-w-md">
+            Limited pieces. Once they're gone, they're gone. No restocks. 
+            No compromises. Only exclusive style.
+          </p>
+          <a href="/products" class="btn">
+            View All Products
+          </a>
+        </div>
+      </div>
+      
+      <!-- Product Grid Preview -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px mt-16 bg-gray-800">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div class="card p-6 bg-black group cursor-pointer">
+            <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4">
+              <span class="text-6xl font-light text-gray-800">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <p class="text-xs uppercase tracking-wider text-muted mb-1">Coming Soon</p>
+            <h3 class="text-lg">Product Name</h3>
+            <p class="text-muted mt-1">€99.00</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Statement Section -->
+  <section class="section border-t">
+    <div class="container">
+      <div class="max-w-4xl mx-auto text-center">
+        <blockquote class="heading-lg">
+          "Fashion is about dressing according to what's fashionable. Style is more about being yourself."
+        </blockquote>
+        <p class="text-muted text-sm uppercase tracking-wider mt-8">
+          — GMYMF Philosophy
+        </p>
+      </div>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,284 @@
+@import "tailwindcss";
+
+/* Brutal Minimalist Design System */
+/* Pure black and white. No gradients. No rounded corners. */
+
+:root {
+  /* Colors - Absolute Minimal */
+  --color-bg: #000000;
+  --color-text: #ffffff;
+  --color-text-muted: #666666;
+  --color-border: #ffffff;
+  --color-border-subtle: #333333;
+  
+  /* Typography - Stark and Powerful */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Space Grotesk", system-ui, sans-serif;
+}
+
+/* Base Styles */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    line-height: 1.4;
+    min-height: 100vh;
+    font-weight: 400;
+  }
+  
+  /* Selection - Invert colors */
+  ::selection {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+  
+  /* Scrollbar - Minimal */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-subtle);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+  }
+  
+  /* Links */
+  a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  
+  a:hover {
+    opacity: 0.7;
+  }
+  
+  a:active {
+    opacity: 0.5;
+  }
+}
+
+/* Typography - Minimal */
+@layer components {
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+  
+  /* Brutalist heading style */
+  .heading-xl {
+    font-size: clamp(3rem, 12vw, 10rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.85;
+    text-transform: uppercase;
+  }
+  
+  .heading-lg {
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+  
+  .heading-md {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  
+  /* Body text */
+  .text-body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  
+  .text-body-lg {
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+  
+  /* Borders - Sharp corners only */
+  .border-b {
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .border-b-subtle {
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  
+  .border-t {
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .border-t-subtle {
+    border-top: 1px solid var(--color-border-subtle);
+  }
+  
+  /* Button - Minimal */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+    opacity: 1;
+  }
+  
+  .btn:active {
+    opacity: 0.8;
+  }
+  
+  .btn-solid {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+  
+  .btn-solid:hover {
+    background: transparent;
+    color: var(--color-text);
+  }
+  
+  /* Card - No rounded corners */
+  .card {
+    border: 1px solid var(--color-border-subtle);
+    background: transparent;
+    transition: border-color 0.2s ease;
+  }
+  
+  .card:hover {
+    border-color: var(--color-border);
+  }
+  
+  /* Input - Minimal */
+  .input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border-subtle);
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  
+  .input:focus {
+    border-color: var(--color-text);
+  }
+  
+  .input::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+/* Layout Utilities */
+@layer utilities {
+  .container {
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .container-lg {
+    max-width: 1200px;
+  }
+  
+  .container-sm {
+    max-width: 800px;
+  }
+  
+  /* Spacing - Large minimal gaps */
+  .section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+  
+  .section-sm {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  /* Grid layouts */
+  .grid-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--color-border-subtle);
+  }
+  
+  .grid-products > * {
+    background: var(--color-bg);
+  }
+}
+
+/* Focus States */
+@layer base {
+  :focus-visible {
+    outline: 1px solid var(--color-text);
+    outline-offset: 2px;
+  }
+  
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+  :root {
+    --container-padding: 1rem;
+  }
+}
