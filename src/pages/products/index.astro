@@ -103,7 +103,7 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
           <p class="text-muted">Check back soon for new drops.</p>
         </div>
       ) : (
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-black">
           {products.map((product) => {
             const cheapestVariant = product.variants?.reduce((cheapest: any, variant: any) => {
               const price = variant.calculated_price?.calculated_amount || variant.price || Infinity
@@ -120,7 +120,7 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
                 href={`/products/${product.handle}`}
                 class="card p-6 bg-black group block"
               >
-                <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4 overflow-hidden">
+                <div class="aspect-[3/4] bg-black flex items-center justify-center mb-4 overflow-hidden">
                   {image ? (
                     <img 
                       src={image} 

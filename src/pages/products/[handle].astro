@@ -60,10 +60,10 @@ const description = product?.description || "Exclusive limited edition clothing 
       {/* Product Detail */}
       <section class="section-sm">
         <div class="container">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-gray-800">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-black">
             {/* Image Gallery */}
             <div class="bg-black p-8 lg:p-16">
-              <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center">
+              <div class="aspect-[3/4] bg-black flex items-center justify-center">
                 {product.images?.[0]?.url ? (
                   <img 
                     src={product.images[0].url}
@@ -77,9 +77,9 @@ const description = product?.description || "Exclusive limited edition clothing 
               
               {/* Thumbnails */}
               {product.images && product.images.length > 1 && (
-                <div class="grid grid-cols-4 gap-px mt-px bg-gray-800">
+                <div class="grid grid-cols-4 gap-px mt-px bg-black">
                   {product.images.slice(0, 4).map((image: any, index: number) => (
-                    <div class="aspect-square bg-gray-900 cursor-pointer hover:bg-gray-800 transition-colors">
+                    <div class="aspect-square bg-black cursor-pointer hover:bg-gray-900 transition-colors">
                       <img 
                         src={image.url}
                         alt={`${product.title} - ${index + 1}`}
@@ -152,16 +152,16 @@ const description = product?.description || "Exclusive limited edition clothing 
 
                 {/* Quantity & Add to Cart */}
                 <div class="space-y-4">
-                  <div class="flex items-stretch gap-px bg-gray-800">
+                  <div class="flex items-stretch gap-px bg-black">
                     <button 
-                      class="px-6 py-4 bg-black hover:bg-gray-900 transition-colors"
+                      class="px-6 py-4 bg-black border border-gray-800 hover:border-white transition-colors"
                       type="button"
                     >
                       −
                     </button>
-                    <span class="px-6 py-4 bg-black min-w-[4rem] text-center">1</span>
+                    <span class="px-6 py-4 bg-black border-y border-gray-800 min-w-[4rem] text-center">1</span>
                     <button 
-                      class="px-6 py-4 bg-black hover:bg-gray-900 transition-colors"
+                      class="px-6 py-4 bg-black border border-gray-800 hover:border-white transition-colors"
                       type="button"
                     >
                       +
