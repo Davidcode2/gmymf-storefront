@@ -9,16 +9,23 @@ const description = "Browse our exclusive limited edition clothing. Limited piec
 
 let products: any[] = []
 let error: string | null = null
+let errorDetails: string | null = null
 
 try {
+  // First, get the default region to calculate prices
+  const { regions } = await sdk.store.region.list()
+  const defaultRegion = regions?.[0]
+  
+  // Fetch products with region for price calculation
   const { products: fetchedProducts } = await sdk.store.product.list({
     limit: 50,
-    fields: "*variants.calculated_price",
+    ...(defaultRegion?.id && { region_id: defaultRegion.id }),
   })
   products = fetchedProducts
-} catch (err) {
+} catch (err: any) {
   console.error("Failed to fetch products:", err)
   error = "Failed to load products"
+  errorDetails = err?.message || String(err)
 }
 
 const categories = [...new Set(products.map(p => p.collection?.title).filter(Boolean))]
@@ -79,7 +86,10 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
     <div class="container px-0">
       {error ? (
         <div class="section text-center">
-          <p class="text-muted text-lg mb-8">{error}</p>
+          <p class="text-muted text-lg mb-4">{error}</p>
+          {errorDetails && (
+            <p class="text-muted text-sm mb-8 opacity-70">{errorDetails}</p>
+          )}
           <button 
             onclick="window.location.reload()" 
             class="btn"
@@ -96,12 +106,13 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800">
           {products.map((product) => {
             const cheapestVariant = product.variants?.reduce((cheapest: any, variant: any) => {
-              const price = variant.calculated_price?.calculated_amount || variant.price || 0
+              const price = variant.calculated_price?.calculated_amount || variant.price || Infinity
               const cheapestPrice = cheapest?.calculated_price?.calculated_amount || cheapest?.price || Infinity
               return price < cheapestPrice ? variant : cheapest
             }, null)
             
-            const price = cheapestVariant?.calculated_price?.calculated_amount || cheapestVariant?.price || 0
+            const hasPrice = cheapestVariant && (cheapestVariant.calculated_price?.calculated_amount || cheapestVariant.price)
+            const price = hasPrice ? (cheapestVariant.calculated_price?.calculated_amount || cheapestVariant.price) : null
             const image = product.images?.[0]?.url || product.thumbnail
             
             return (
@@ -129,9 +140,11 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
                   <h3 class="text-lg group-hover:text-muted transition-colors">
                     {product.title}
                   </h3>
-                  <p class="text-muted">
-                    €{price.toFixed(2)}
-                  </p>
+                  {price ? (
+                    <p class="text-muted">€{price.toFixed(2)}</p>
+                  ) : (
+                    <p class="text-muted text-sm">Price on request</p>
+                  )}
                 </div>
               </a>
             )
