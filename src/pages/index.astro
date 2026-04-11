@@ -1,10 +1,31 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro"
+import { sdk } from "../lib/medusa"
 
-export const prerender = true
+export const prerender = false
 
 const title = "GMYMF"
 const description = "Give me your money, fool. Exclusive limited edition clothing."
+
+// Fetch featured products
+let featuredProducts: any[] = []
+let error: string | null = null
+
+try {
+  // Get default region for price calculation
+  const { regions } = await sdk.store.region.list()
+  const defaultRegion = regions?.[0]
+  
+  // Fetch latest products
+  const { products: fetchedProducts } = await sdk.store.product.list({
+    limit: 6,
+    ...(defaultRegion?.id && { region_id: defaultRegion.id }),
+  })
+  featuredProducts = fetchedProducts
+} catch (err: any) {
+  console.error("Failed to fetch featured products:", err)
+  error = err?.message || String(err)
+}
 ---
 
 <MainLayout title={title} description={description}>
@@ -55,16 +76,56 @@ const description = "Give me your money, fool. Exclusive limited edition clothin
       
       <!-- Product Grid Preview -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px mt-16 bg-gray-800">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div class="card p-6 bg-black group cursor-pointer">
-            <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4">
-              <span class="text-6xl font-light text-gray-800">{String(i + 1).padStart(2, '0')}</span>
+        {featuredProducts.length > 0 ? (
+          featuredProducts.map((product) => {
+            const image = product.images?.[0]?.url || product.thumbnail
+            const cheapestVariant = product.variants?.reduce((cheapest: any, variant: any) => {
+              const price = variant.calculated_price?.calculated_amount || variant.price || Infinity
+              const cheapestPrice = cheapest?.calculated_price?.calculated_amount || cheapest?.price || Infinity
+              return price < cheapestPrice ? variant : cheapest
+            }, null)
+            const hasPrice = cheapestVariant && (cheapestVariant.calculated_price?.calculated_amount || cheapestVariant.price)
+            const price = hasPrice ? (cheapestVariant.calculated_price?.calculated_amount || cheapestVariant.price) : null
+            
+            return (
+              <a href={`/products/${product.handle}`} class="card p-6 bg-black group block">
+                <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4 overflow-hidden">
+                  {image ? (
+                    <img 
+                      src={image} 
+                      alt={product.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="text-6xl font-light text-gray-800">GMYMF</span>
+                  )}
+                </div>
+                <div class="space-y-2">
+                  <h3 class="text-lg group-hover:text-muted transition-colors">
+                    {product.title}
+                  </h3>
+                  {price ? (
+                    <p class="text-muted text-sm">€{price.toFixed(2)}</p>
+                  ) : (
+                    <p class="text-muted text-sm">Price on request</p>
+                  )}
+                </div>
+              </a>
+            )
+          })
+        ) : (
+          Array.from({ length: 6 }).map((_, i) => (
+            <div class="card p-6 bg-black group cursor-pointer">
+              <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4">
+                <span class="text-6xl font-light text-gray-800">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <p class="text-xs uppercase tracking-wider text-muted mb-1">Coming Soon</p>
+              <h3 class="text-lg">Product Name</h3>
+              <p class="text-muted mt-1">€99.00</p>
             </div>
-            <p class="text-xs uppercase tracking-wider text-muted mb-1">Coming Soon</p>
-            <h3 class="text-lg">Product Name</h3>
-            <p class="text-muted mt-1">€99.00</p>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   </section>
