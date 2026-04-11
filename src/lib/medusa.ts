@@ -13,22 +13,23 @@ import Medusa from "@medusajs/js-sdk"
  */
 
 // Get environment variables
-const MEDUSA_API_URL = import.meta.env.MEDUSA_API_URL || "http://localhost:9000"
-const MEDUSA_PUBLISHABLE_KEY = import.meta.env.MEDUSA_PUBLISHABLE_KEY
+// In SSR mode, we need to use process.env for server-side rendering
+const MEDUSA_API_URL = process.env.MEDUSA_API_URL || import.meta.env.MEDUSA_API_URL || "http://localhost:9000"
+const MEDUSA_PUBLISHABLE_KEY = process.env.MEDUSA_PUBLISHABLE_KEY || import.meta.env.MEDUSA_PUBLISHABLE_KEY
 
 // Validate required configuration
 if (!MEDUSA_PUBLISHABLE_KEY) {
   console.warn(
     "MEDUSA_PUBLISHABLE_KEY is not set. " +
     "Some store operations may fail. " +
-    "Set this in your environment variables or AWS SSM."
+    "Set this in your environment variables."
   )
 }
 
 // Initialize SDK
 export const sdk = new Medusa({
   baseUrl: MEDUSA_API_URL,
-  debug: import.meta.env.DEV,
+  debug: import.meta.env?.DEV || process.env.NODE_ENV === "development",
   publishableKey: MEDUSA_PUBLISHABLE_KEY,
 })
 
