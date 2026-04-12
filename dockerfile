@@ -16,7 +16,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Stage 2: Runtime with Node.js
+# Stage 2: Production with Node.js
 FROM node:22-alpine
 
 # Set working directory
@@ -34,10 +34,5 @@ COPY --from=builder /app/dist ./dist
 # Expose port
 EXPOSE 8080
 
-# Set environment variables for port
-ENV PORT=8080
-ENV SERVER_PORT=8080
-ENV HOST=0.0.0.0
-
-# Run the Node.js server
+# Run the Node.js server directly - Astro's Node adapter should bind to 0.0.0.0 by default in standalone mode
 CMD ["node", "./dist/server/entry.mjs"]
