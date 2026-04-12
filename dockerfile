@@ -34,8 +34,10 @@ COPY --from=builder /app/dist ./dist
 # Expose port
 EXPOSE 8080
 
-# Set environment variable for port
+# Set environment variables for port
 ENV PORT=8080
+ENV SERVER_PORT=8080
+ENV HOST=0.0.0.0
 
 # Run the Node.js server
 CMD ["node", "./dist/server/entry.mjs"]
