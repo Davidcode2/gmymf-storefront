@@ -34,5 +34,9 @@ COPY --from=builder /app/dist ./dist
 # Expose port
 EXPOSE 8080
 
-# Run the Node.js server directly - Astro's Node adapter should bind to 0.0.0.0 by default in standalone mode
+# Set required environment variables
+ENV PORT=8080
+ENV HOST=0.0.0.0
+
+# Run the Node.js server
 CMD ["node", "./dist/server/entry.mjs"]
