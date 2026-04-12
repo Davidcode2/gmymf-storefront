@@ -23,7 +23,7 @@ on:
 
 
 env:
-  REGISTRY: ghcr
+  REGISTRY: ghcr.io
 
 jobs:
   build-and-push:
