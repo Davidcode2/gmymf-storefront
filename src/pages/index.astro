@@ -5,7 +5,7 @@ import { sdk } from "../lib/medusa"
 export const prerender = false
 
 const title = "GMYMF"
-const description = "Give me your money, fool. Exclusive limited edition clothing."
+const description = "Premium overpriced essentials made in the exact same factories as everyone else. Starting at 400€ because we can."
 
 // Fetch featured products
 let featuredProducts: any[] = []
@@ -33,17 +33,17 @@ try {
   <section class="min-h-[calc(100vh-4rem)] flex flex-col justify-center container">
     <div class="max-w-5xl">
       <h1 class="heading-xl">
-        Give me<br />
-        your money,<br />
-        fool.
+        Overpriced.<br />
+        Overhyped.<br />
+        Obviously.
       </h1>
       
       <div class="mt-12 flex flex-col sm:flex-row gap-4">
         <a href="/products" class="btn btn-solid">
-          Shop Now
+          Give Us Money
         </a>
         <a href="/about" class="btn">
-          Learn More
+          Why So Expensive?
         </a>
       </div>
     </div>
@@ -59,17 +59,17 @@ try {
     <div class="container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
-          <p class="text-muted text-sm uppercase tracking-wider mb-4">Featured</p>
-          <h2 class="heading-lg">Latest<br />Drops</h2>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Artificial Scarcity</p>
+          <h2 class="heading-lg">Limited<br />Drops</h2>
         </div>
         
         <div class="lg:pt-16">
           <p class="text-body-lg text-muted mb-8 max-w-md">
-            Limited pieces. Once they're gone, they're gone. No restocks. 
-            No compromises. Only exclusive style.
+            We made 50 of these. That's it. Not because we can't make more, 
+            but because limiting supply is capitalism 101 and you fell for it.
           </p>
           <a href="/products" class="btn">
-            View All Products
+            Browse The Goods
           </a>
         </div>
       </div>
@@ -120,9 +120,9 @@ try {
               <div class="aspect-[3/4] bg-gray-900 flex items-center justify-center mb-4">
                 <span class="text-6xl font-light text-gray-800">{String(i + 1).padStart(2, '0')}</span>
               </div>
-              <p class="text-xs uppercase tracking-wider text-muted mb-1">Coming Soon</p>
-              <h3 class="text-lg">Product Name</h3>
-              <p class="text-muted mt-1">€99.00</p>
+          <p class="text-xs uppercase tracking-wider text-muted mb-1">Coming Soon</p>
+          <h3 class="text-lg">Mystery Overpriced Item</h3>
+          <p class="text-muted mt-1">€449.00</p>
             </div>
           ))
         )}
@@ -135,10 +135,10 @@ try {
     <div class="container">
       <div class="max-w-4xl mx-auto text-center">
         <blockquote class="heading-lg">
-          "Fashion is about dressing according to what's fashionable. Style is more about being yourself."
+          "The only thing more overpriced than our hoodies is the therapy you'll need after checking your bank statement."
         </blockquote>
         <p class="text-muted text-sm uppercase tracking-wider mt-8">
-          — GMYMF Philosophy
+          — Our Actual Philosophy
         </p>
       </div>
     </div>

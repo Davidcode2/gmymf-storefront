@@ -8,7 +8,7 @@ interface Props {
 
 const { 
   title, 
-  description = "GMYMF - Give me your money, fool. Exclusive limited edition clothing."
+  description = "GMYMF - Overpriced essentials made in the same factories as everyone else. Starting at 400€ because capitalism."
 } = Astro.props
 
 const currentPath = Astro.url.pathname
@@ -68,7 +68,7 @@ const currentPath = Astro.url.pathname
               currentPath.startsWith("/products") ? "text-white" : "text-muted"
             ]}
           >
-            Products
+            The Goods
           </a>
           <a 
             href="/about" 
@@ -77,14 +77,14 @@ const currentPath = Astro.url.pathname
               currentPath === "/about" ? "text-white" : "text-muted"
             ]}
           >
-            About
+            The Scam
           </a>
         </div>
         
         <!-- Cart Icon -->
         <div class="flex items-center gap-4">
           <a href="/cart" class="text-sm uppercase tracking-wider text-muted hover:text-white transition-colors">
-            Cart (0)
+            Money Pit (0)
           </a>
           
           <!-- Mobile Menu Button -->
@@ -110,19 +110,19 @@ const currentPath = Astro.url.pathname
             href="/products" 
             class="block text-sm uppercase tracking-wider py-2"
           >
-            Products
+            The Goods
           </a>
           <a 
             href="/about" 
             class="block text-sm uppercase tracking-wider py-2"
           >
-            About
+            The Scam
           </a>
           <a 
             href="/cart" 
             class="block text-sm uppercase tracking-wider py-2"
           >
-            Cart (0)
+            Money Pit (0)
           </a>
         </div>
       </div>
@@ -141,23 +141,23 @@ const currentPath = Astro.url.pathname
           <div class="space-y-4">
             <p class="heading-md text-xl">GMYMF</p>
             <p class="text-muted text-sm max-w-xs">
-              Give me your money, fool. Exclusive limited edition clothing.
+              Give me your money, fool. Premium overpricing since 2026. Same factories, different price tag.
             </p>
           </div>
           
           <!-- Links -->
           <div class="space-y-4">
-            <p class="text-sm uppercase tracking-wider text-muted">Links</p>
+            <p class="text-sm uppercase tracking-wider text-muted">Navigate</p>
             <div class="space-y-2">
-              <a href="/products" class="block text-sm hover:text-muted">Products</a>
-              <a href="/about" class="block text-sm hover:text-muted">About</a>
-              <a href="/contact" class="block text-sm hover:text-muted">Contact</a>
+              <a href="/products" class="block text-sm hover:text-muted">The Goods</a>
+              <a href="/about" class="block text-sm hover:text-muted">The Scam</a>
+              <a href="/contact" class="block text-sm hover:text-muted">Complain Here</a>
             </div>
           </div>
           
           <!-- Social -->
           <div class="space-y-4">
-            <p class="text-sm uppercase tracking-wider text-muted">Follow</p>
+            <p class="text-sm uppercase tracking-wider text-muted">Witness The Hustle</p>
             <div class="space-y-2">
               <a href="#" class="block text-sm hover:text-muted">Instagram</a>
               <a href="#" class="block text-sm hover:text-muted">Twitter</a>
@@ -168,7 +168,7 @@ const currentPath = Astro.url.pathname
         <!-- Bottom -->
         <div class="border-t-subtle mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p class="text-muted text-xs uppercase tracking-wider">
-            © 2026 GMYMF. All rights reserved.
+            © 2026 GMYMF. All your money reserved.
           </p>
           <div class="flex gap-6">
             <a href="/privacy" class="text-muted text-xs uppercase tracking-wider hover:text-white">Privacy</a>

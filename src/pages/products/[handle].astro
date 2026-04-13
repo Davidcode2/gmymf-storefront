@@ -31,7 +31,7 @@ try {
 }
 
 const title = product ? `${product.title} - GMYMF` : "Product - GMYMF"
-const description = product?.description || "Exclusive limited edition clothing from GMYMF"
+const description = product?.description || "Another overpriced item from GMYMF. Your wallet called. It's crying."
 ---
 
 <MainLayout title={title} description={description}>
@@ -174,24 +174,24 @@ const description = product?.description || "Exclusive limited edition clothing 
                     disabled={!product.variants?.some((v: any) => v.inventory_quantity > 0)}
                   >
                     {product.variants?.some((v: any) => v.inventory_quantity > 0) 
-                      ? "Add to Cart" 
-                      : "Out of Stock"
+                      ? "Take My Money" 
+                      : "Sold Out (Probably Forever)"
                     }
                   </button>
                   
                   {/* Stock Status */}
                   <p class="text-xs uppercase tracking-wider text-muted text-center">
                     {product.variants?.some((v: any) => v.inventory_quantity > 0) 
-                      ? "In Stock — Ships within 2-3 days" 
-                      : "Currently out of stock"
+                      ? "In Stock — Ships before buyer's remorse sets in" 
+                      : "Gone. Should've been faster. (That's on you.)"
                     }
                   </p>
                 </div>
 
                 {/* Additional Info */}
                 <div class="mt-12 pt-8 border-t-subtle space-y-2 text-xs uppercase tracking-wider text-muted">
-                  <p>Free returns within 30 days</p>
-                  <p>Secure checkout</p>
+                  <p>30-day regret window (returns)</p>
+                  <p>Secure checkout (your data is worth more to us than the hoodie)</p>
                 </div>
               </div>
             </div>

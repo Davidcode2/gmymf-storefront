@@ -5,7 +5,7 @@ import { sdk } from "../../lib/medusa"
 export const prerender = false
 
 const title = "Products - GMYMF"
-const description = "Browse our exclusive limited edition clothing. Limited pieces, maximum style."
+const description = "Browse our collection of overpriced basics. Same factories, 400% markup. You're welcome."
 
 let products: any[] = []
 let error: string | null = null
@@ -37,13 +37,14 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
     <div class="container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
         <div>
-          <p class="text-muted text-sm uppercase tracking-wider mb-4">All Products</p>
-          <h1 class="heading-lg">Products</h1>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">The Collection</p>
+          <h1 class="heading-lg">Overpriced Goods</h1>
         </div>
         
         <div class="lg:text-right">
           <p class="text-muted text-body-lg max-w-md lg:ml-auto">
-            Exclusive limited edition pieces. Once they're gone, they're gone.
+            Premium prices for regular products. Don't ask about the markup. 
+            Just enjoy the exclusivity of having less money.
           </p>
         </div>
       </div>
@@ -55,7 +56,7 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
     <div class="container">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-6">
-          <span class="text-sm uppercase tracking-wider">Filter:</span>
+          <span class="text-sm uppercase tracking-wider">Pretend to Filter:</span>
           {categories.length > 0 ? (
             <div class="flex flex-wrap gap-4">
               {categories.slice(0, 5).map((category) => (
@@ -70,11 +71,11 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
         </div>
         
         <div class="flex items-center gap-4">
-          <span class="text-sm uppercase tracking-wider">Sort:</span>
+          <span class="text-sm uppercase tracking-wider">Sort by Regret:</span>
           <select class="bg-transparent text-white border-none text-sm focus:outline-none cursor-pointer">
-            <option value="newest" class="bg-black">Newest</option>
-            <option value="price-low" class="bg-black">Price: Low</option>
-            <option value="price-high" class="bg-black">Price: High</option>
+            <option value="newest" class="bg-black">Newest Scam</option>
+            <option value="price-low" class="bg-black">Least Painful</option>
+            <option value="price-high" class="bg-black">Most Expensive (Recommended)</option>
           </select>
         </div>
       </div>
@@ -99,8 +100,8 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
         </div>
       ) : products.length === 0 ? (
         <div class="section text-center">
-          <p class="text-muted text-lg mb-4">No products available yet.</p>
-          <p class="text-muted">Check back soon for new drops.</p>
+          <p class="text-muted text-lg mb-4">Sold out or not restocking.</p>
+          <p class="text-muted">We're either being exclusive or lazy. Probably both.</p>
         </div>
       ) : (
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-black">
@@ -156,7 +157,7 @@ const categories = [...new Set(products.map(p => p.collection?.title).filter(Boo
     <!-- Product Count -->
     <div class="container py-8 border-b">
       <p class="text-muted text-sm uppercase tracking-wider text-center">
-        Showing {products.length} product{products.length !== 1 ? 's' : ''}
+        Showing {products.length} way{products.length !== 1 ? 's' : ''} to part with your money
       </p>
     </div>
   </section>
