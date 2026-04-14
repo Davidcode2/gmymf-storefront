@@ -14,10 +14,15 @@ let product: any = null
 let error: string | null = null
 
 try {
+  // Get the default region for price calculation
+  const { regions } = await sdk.store.region.list()
+  const defaultRegion = regions?.[0]
+  
   const { products: fetchedProducts } = await sdk.store.product.list({
     handle: handle,
     limit: 1,
-    fields: "*variants,*variants.options,*options,*images",
+    ...(defaultRegion?.id && { region_id: defaultRegion.id }),
+    fields: "*variants.calculated_price,+variants.inventory_quantity,+variants.manage_inventory,*variants.options,*options,*images",
   })
   
   product = fetchedProducts[0]
@@ -171,9 +176,9 @@ const description = product?.description || "Another overpriced item from GMYMF.
                   <button 
                     class="btn btn-solid w-full"
                     type="button"
-                    disabled={!product.variants?.some((v: any) => v.inventory_quantity > 0)}
+                    disabled={!product.variants?.some((v: any) => !v.manage_inventory || v.inventory_quantity > 0)}
                   >
-                    {product.variants?.some((v: any) => v.inventory_quantity > 0) 
+                    {product.variants?.some((v: any) => !v.manage_inventory || v.inventory_quantity > 0) 
                       ? "Take My Money" 
                       : "Sold Out (Probably Forever)"
                     }
@@ -181,7 +186,7 @@ const description = product?.description || "Another overpriced item from GMYMF.
                   
                   {/* Stock Status */}
                   <p class="text-xs uppercase tracking-wider text-muted text-center">
-                    {product.variants?.some((v: any) => v.inventory_quantity > 0) 
+                    {product.variants?.some((v: any) => !v.manage_inventory || v.inventory_quantity > 0) 
                       ? "In Stock — Ships before buyer's remorse sets in" 
                       : "Gone. Should've been faster. (That's on you.)"
                     }

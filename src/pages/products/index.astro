@@ -16,10 +16,11 @@ try {
   const { regions } = await sdk.store.region.list()
   const defaultRegion = regions?.[0]
   
-  // Fetch products with region for price calculation
+  // Fetch products with region for price calculation and include inventory/pricing fields
   const { products: fetchedProducts } = await sdk.store.product.list({
     limit: 50,
     ...(defaultRegion?.id && { region_id: defaultRegion.id }),
+    fields: "*variants.calculated_price,+variants.inventory_quantity,+variants.manage_inventory",
   })
   products = fetchedProducts
 } catch (err: any) {
