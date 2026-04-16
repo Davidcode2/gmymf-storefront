@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css"
+import { CartHeader } from "../components/cart/CartHeader"
 
 interface Props {
   title: string
@@ -83,9 +84,7 @@ const currentPath = Astro.url.pathname
         
         <!-- Cart Icon -->
         <div class="flex items-center gap-4">
-          <a href="/cart" class="text-sm uppercase tracking-wider text-muted hover:text-white transition-colors">
-            Money Pit (0)
-          </a>
+          <CartHeader client:only="react" />
           
           <!-- Mobile Menu Button -->
           <button 
@@ -122,7 +121,7 @@ const currentPath = Astro.url.pathname
             href="/cart" 
             class="block text-sm uppercase tracking-wider py-2"
           >
-            Money Pit (0)
+            Money Pit
           </a>
         </div>
       </div>

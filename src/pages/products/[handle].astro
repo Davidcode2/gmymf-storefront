@@ -1,6 +1,7 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro"
 import { sdk } from "../../lib/medusa"
+import { ProductAddToCart } from "../../components/cart/ProductAddToCart"
 
 export const prerender = false
 
@@ -132,66 +133,13 @@ const description = product?.description || "Another overpriced item from GMYMF.
                   </p>
                 )}
 
-                {/* Options */}
-                {product.options && product.options.length > 0 && (
-                  <div class="space-y-6 mb-8">
-                    {product.options.map((option: any) => (
-                      <div>
-                        <label class="block text-xs uppercase tracking-wider text-muted mb-3">
-                          {option.title}
-                        </label>
-                        <div class="flex flex-wrap gap-2">
-                          {option.values?.map((value: any) => (
-                            <button 
-                              class="px-4 py-2 text-sm border border-gray-800 hover:border-white transition-colors"
-                              type="button"
-                            >
-                              {value.value}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Quantity & Add to Cart */}
-                <div class="space-y-4">
-                  <div class="flex items-stretch gap-px bg-black">
-                    <button 
-                      class="px-6 py-4 bg-black border border-gray-800 hover:border-white transition-colors"
-                      type="button"
-                    >
-                      −
-                    </button>
-                    <span class="px-6 py-4 bg-black border-y border-gray-800 min-w-[4rem] text-center">1</span>
-                    <button 
-                      class="px-6 py-4 bg-black border border-gray-800 hover:border-white transition-colors"
-                      type="button"
-                    >
-                      +
-                    </button>
-                  </div>
-                  
-                  <button 
-                    class="btn btn-solid w-full"
-                    type="button"
-                    disabled={!product.variants?.some((v: any) => !v.manage_inventory || v.inventory_quantity > 0)}
-                  >
-                    {product.variants?.some((v: any) => !v.manage_inventory || v.inventory_quantity > 0) 
-                      ? "Take My Money" 
-                      : "Sold Out (Probably Forever)"
-                    }
-                  </button>
-                  
-                  {/* Stock Status */}
-                  <p class="text-xs uppercase tracking-wider text-muted text-center">
-                    {product.variants?.some((v: any) => !v.manage_inventory || v.inventory_quantity > 0) 
-                      ? "In Stock — Ships before buyer's remorse sets in" 
-                      : "Gone. Should've been faster. (That's on you.)"
-                    }
-                  </p>
-                </div>
+                {/* Add to Cart */}
+                <ProductAddToCart
+                  client:only="react"
+                  productId={product.id}
+                  variants={product.variants}
+                  options={product.options}
+                />
 
                 {/* Additional Info */}
                 <div class="mt-12 pt-8 border-t-subtle space-y-2 text-xs uppercase tracking-wider text-muted">
