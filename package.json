@@ -21,7 +21,9 @@
     "@astrojs/node": "^10.0.4",
     "@astrojs/react": "^5.0.3",
     "@medusajs/js-sdk": "^2.13.6",
+    "@medusajs/types": "^2.13.6",
     "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-query": "^5.99.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "astro": "^6.1.5",
@@ -32,5 +34,8 @@
   },
   "overrides": {
     "vite": "^7"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
   }
 }
