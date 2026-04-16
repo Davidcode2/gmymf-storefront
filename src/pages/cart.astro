@@ -1,0 +1,10 @@
+---
+import MainLayout from "../layouts/MainLayout.astro"
+import { CartPage } from "../components/cart/CartPage"
+
+export const prerender = false
+---
+
+<MainLayout title="Money Pit - GMYMF" description="Your cart. Empty it by spending money.">
+  <CartPage client:only="react" />
+</MainLayout>
