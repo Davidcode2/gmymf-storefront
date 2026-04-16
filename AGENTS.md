@@ -15,6 +15,14 @@
 - **Brand:** GMYMF (Give me your money, fool) - exclusive, limited pieces
 - **Max Products:** ~100 (drops model, low inventory)
 
+#### Tone and Philosophy
+
+- rife with sarcasm
+- celebrating capitalism in ironic way
+- use 'I' perspective instead of 'we'
+- extremely overpriced goods
+- overcharging and being straight about it
+
 ### Tech Stack
 - Astro for static/server rendering
 - React for client islands (cart, search, filters)
