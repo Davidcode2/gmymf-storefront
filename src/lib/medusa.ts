@@ -12,19 +12,10 @@ import Medusa from "@medusajs/js-sdk"
  * NEVER use regular fetch() for Medusa API calls - always use this SDK.
  */
 
-// Get environment variables
-// In SSR mode, we need to use process.env for server-side rendering
-const MEDUSA_API_URL = process.env.MEDUSA_API_URL || import.meta.env.MEDUSA_API_URL || "http://localhost:9000"
-const MEDUSA_PUBLISHABLE_KEY = process.env.MEDUSA_PUBLISHABLE_KEY || import.meta.env.MEDUSA_PUBLISHABLE_KEY
-
-// Validate required configuration
-if (!MEDUSA_PUBLISHABLE_KEY) {
-  console.warn(
-    "MEDUSA_PUBLISHABLE_KEY is not set. " +
-    "Some store operations may fail. " +
-    "Set this in your environment variables."
-  )
-}
+// Production configuration - hardcoded for simplicity
+// Publishable keys are safe to expose publicly (like Stripe's publishable keys)
+const MEDUSA_API_URL = process.env.MEDUSA_API_URL || "https://gmymf-medusa.jakob-lingel.dev"
+const MEDUSA_PUBLISHABLE_KEY = process.env.MEDUSA_PUBLISHABLE_KEY || "pk_3f8c3188d7507238c98b1867f0aba926b3301731ccbcb1ab9bb2a2655d6256af"
 
 // Initialize SDK
 export const sdk = new Medusa({
@@ -96,6 +87,7 @@ export async function updateCartItem(
 }
 
 export async function removeCartItem(cartId: string, lineItemId: string) {
-  const { cart } = await sdk.store.cart.deleteLineItem(cartId, lineItemId)
+  await sdk.store.cart.deleteLineItem(cartId, lineItemId)
+  const { cart } = await sdk.store.cart.retrieve(cartId)
   return cart
 }
