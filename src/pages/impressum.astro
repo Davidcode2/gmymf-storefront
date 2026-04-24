@@ -1,0 +1,80 @@
+---
+import MainLayout from "../layouts/MainLayout.astro"
+
+export const prerender = true
+
+const title = "Impressum - GMYMF"
+const description = "Legal notice. The boring stuff required by German law. Yes, even overpriced hoodies need paperwork."
+---
+
+<MainLayout title={title} description={description}>
+  <section class="section border-b">
+    <div class="container">
+      <h1 class="heading-xl max-w-5xl">
+        The Fine<br />Print
+      </h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container-sm">
+      <div class="space-y-12">
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Angaben gemäß § 5 DDG</p>
+          <p class="text-body-lg">
+            Jakob Lingel<br />
+            Amselweg 3<br />
+            73560 Böbingen an der Rems
+          </p>
+        </div>
+
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Kontakt</p>
+          <p class="text-body-lg">
+            E-Mail: <a href="mailto:hello@gmymf.com" class="hover:opacity-70 transition-opacity">hello@gmymf.com</a>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Wirtschafts-Identifikationsnummer</p>
+          <p class="text-body-lg">
+            gemäß § 139c Abgabenordnung:<br />
+            DE457840760-00001
+          </p>
+        </div>
+
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</p>
+          <p class="text-body-lg">
+            Jakob Lingel<br />
+            Amselweg 3<br />
+            73560 Böbingen an der Rems
+          </p>
+        </div>
+
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">EU-Streitbeilegung</p>
+          <p class="text-body-lg text-muted">
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
+            <a 
+              href="https://ec.europa.eu/consumers/odr/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-white hover:opacity-70 transition-opacity"
+            >
+              https://ec.europa.eu/consumers/odr/
+            </a>. 
+            Unsere E-Mail-Adresse finden Sie oben im Impressum.
+          </p>
+        </div>
+
+        <div>
+          <p class="text-muted text-sm uppercase tracking-wider mb-4">Verbraucherstreitbeilegung</p>
+          <p class="text-body-lg text-muted">
+            Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
