@@ -1,7 +1,7 @@
 {
   "name": "gmymf-storefront",
   "type": "module",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Astro.js storefront for GMYMF clothing brand",
   "engines": {
     "node": ">=22.12.0"
